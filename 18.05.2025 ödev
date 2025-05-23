@@ -1,0 +1,167 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+int fileControl();
+int fileCreate();
+void fileRead();
+void fileWrite();
+void fileRemove();
+
+char fileName[20] = "output.txt";
+
+int main(){
+	int choice;
+	printf("dosya ismi girin\n");
+	scanf("%s", fileName);
+	
+	
+	while(1) {
+		
+		printf("\n    dosya yonetimi     \n");
+		printf("1. dosya kontrol\n");
+		printf("2. dosya olustur\n");
+		printf("3. dosya yaz\n");
+		printf("4. dosyayi oku\n");
+		printf("5. dosyayi sil \n");
+		printf("6. cikis\n");
+		printf("bir secim yapiniz\n");
+		scanf("%d", &choice);
+		
+		switch(choice){
+		case 1:
+			fileControl();
+			
+			break;
+			
+		case 2:
+			fileCreate();
+			
+			break;
+			
+		case 3:
+			fileWrite();
+			
+			break;
+			
+		case 4:
+			fileRead();
+			
+			break;
+			
+		case 5:
+			fileRemove();
+			
+			break;
+			
+		case 6:
+			printf("Programdan cikiliyor...\n");
+            exit(0);
+            break;
+			
+		default:
+			 printf("Gecersiz secim yaptiniz\n");
+			break;
+	}
+}
+}
+
+
+int fileControl(){
+
+	FILE *file = fopen(fileName, "r");
+	
+	
+	if(file){
+		puts("Dosya Mevcut");
+		fclose(file);
+		return 1;
+		
+	}
+	else {
+		printf("Dosyaniz mevcut degil\n");
+		
+		return 0;
+		
+	}
+
+	
+}
+
+int fileCreate(){
+	FILE *file = fopen(fileName, "w");
+	
+	
+	if(file == NULL){
+		puts("Dosya olusturulamiyor");
+	
+		return 1;
+		
+	}
+	else {
+		printf("Dosyanız oluşturuldu\n");
+		fclose(file);
+		return 0;
+		
+	}
+	
+	
+	
+}
+
+void fileRead(){
+		FILE *file = fopen(fileName, "r");
+		char line[100];
+		
+		if(fileControl()){
+			
+			printf("dosya okundu\n");
+			while(fgets(line, sizeof(line),file))
+			{
+				printf("%s", line);
+				
+			}
+			fclose(file);
+			
+		}
+	
+
+	
+	
+	
+}
+
+void fileWrite() {
+    FILE *file = fopen(fileName, "a");
+
+    if (file == NULL) {
+        printf("Dosya yazmak icin acilamadi.\n");
+        return;
+    }
+
+    int n;
+    char text[100];
+
+    printf("Kac satir yazmak istiyorsunuz?\n");
+    scanf("%d", &n);
+  
+
+    for (int i = 0; i < n; i++) {
+        printf("%d. satiri girin:\n", i + 1);
+        fgets(text, sizeof(text), stdin);
+        fputs(text, file);
+    }
+
+    fclose(file);
+    printf("Yazma islemi tamamlandi.\n");
+}
+
+void fileRemove(){
+	if(remove(fileName) == 0) {
+        printf("Dosya silindi.\n");
+    } else {
+        printf("Dosya silinemedi.\n");
+    }
+
+	
+}
+
