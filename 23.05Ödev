@@ -148,7 +148,7 @@ int dugumSil(int sira){
         printf("Indeks listede yok.\n");
     } 
 	else {
-        if (temp2 == NULL) { // silinecek dugum bas
+        if (temp2 == NULL) { 
             head = temp->next;
         } else {
             temp2->next = temp->next;
